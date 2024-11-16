@@ -1,3 +1,8 @@
+'use client';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChild, faBan, faBanSmoking, faDog } from '@fortawesome/free-solid-svg-icons';
+
 export default function Rules() {
   return (
     <section className="rules-container">
@@ -16,28 +21,36 @@ export default function Rules() {
             </p>
             <div className="rules-icons">
               <div className="rule-item">
-                <i className="fa fa-child" aria-hidden="true"></i>
+                <i className="fa fa-child">
+                  <FontAwesomeIcon icon={faChild}  />
+                </i>
                 <div>
                   <strong>Children</strong>
                   <br /> Children allowed: ages 0-17
                 </div>
               </div>
               <div className="rule-item">
-                <i className="fa-solid fa-dog"></i>
+                <i className="fa-solid fa-dog">
+                  <FontAwesomeIcon icon={faDog}  />
+                </i>
                 <div>
                   <strong>Pets</strong>
                   <br /> No pets allowed
                 </div>
               </div>
               <div className="rule-item">
-                <i className="fa-solid fa-ban"></i>
+                <i className="fa-solid fa-ban">
+                 <FontAwesomeIcon icon={faBan}  />
+                </i>
                 <div>
                   <strong>Events</strong>
                   <br /> No events allowed
                 </div>
               </div>
               <div className="rule-item">
-                <i className="fa-solid fa-ban-smoking"></i>
+                <i className="fa-solid fa-ban-smoking">
+                  <FontAwesomeIcon icon={faBanSmoking}  />
+                </i>
                 <div>
                   <strong>Smoking</strong>
                   <br /> Smoking is not permitted

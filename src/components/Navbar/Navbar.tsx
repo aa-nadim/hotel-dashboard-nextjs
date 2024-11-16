@@ -1,28 +1,203 @@
 "use client";
 
-import Link from "next/link";
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleUser, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
-export default function Navbar() {
+const Navbar = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Handle clicking outside modal to close
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains('nav-modal-overlay')) {
+      handleClose();
+    }
+  };
+
+  if (!isClient) return null;
+
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-left"> {/* Add logo here */} </div>
-        <div className="navbar-right">
-          <ul className="nav-links">
-            <li>
-              <Link href="#" className="nav-link">
-                <i className="fa fa-globe" aria-hidden="true"></i>
-                <span id="location-display">United States</span>
-              </Link>
-            </li>
-            <li><Link href="#" className="nav-link">Trip Boards</Link></li>
-            <li><Link href="#" className="nav-link">List your property</Link></li>
-            <li><Link href="#" className="nav-link">Help</Link></li>
-            <li><Link href="#" className="nav-link">My trips</Link></li>
-            <li><Link href="#" className="nav-link sign-in">Sign in</Link></li>
-          </ul>
+    <div className="relative">
+      <nav className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between h-16">
+            <div className="flex-shrink-0 flex items-center">
+              {/* Logo placeholder */}
+              <div className="w-8 h-8 bg-gray-200 rounded">
+                
+              </div>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={toggleMobileMenu}
+                className="text-gray-600 hover:text-gray-900"
+                aria-label="Toggle menu"
+              >
+                <i className="fa-regular fa-circle-user">
+                  <FontAwesomeIcon icon={faCircleUser}  />
+                </i>
+              </button>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center">
+              <ul className="flex space-x-8">
+                <li>
+                  <button 
+                    onClick={handleOpen}
+                    className="flex items-center text-gray-700 hover:text-gray-900"
+                  >
+                  <i className="fa-regular fa-globe">
+                    <FontAwesomeIcon icon={faGlobe}  />
+                  </i>
+                    <span>United States</span>
+                  </button>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-700 hover:text-gray-900">
+                    Trip Boards
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-700 hover:text-gray-900">
+                    List your property
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-700 hover:text-gray-900">
+                    Help
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-700 hover:text-gray-900">
+                    My trips
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                    Sign in
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-    </nav>
+
+                {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <button 
+                onClick={handleOpen}
+                className="block px-3 py-2 text-gray-700 hover:text-gray-900 w-full text-left"
+              >
+                {/* <Globe className="w-4 h-4 inline mr-2" /> */}
+                <i className="fa-regular fa-globe">
+                    <FontAwesomeIcon icon={faGlobe}  />
+                </i>
+                United States
+              </button>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">
+                Trip Boards
+              </a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">
+                List your property
+              </a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">
+                Help
+              </a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">
+                My trips
+              </a>
+              <a href="#" className="block px-3 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                Sign in
+              </a>
+            </div>
+          </div>
+        )}
+      </nav>
+     
+
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center nav-modal-overlay"
+          onClick={handleOverlayClick}
+        >
+          <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div className="flex justify-start items-center mb-6 gap-4">
+              <button 
+                onClick={handleClose}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
+              <h2 className="text-xl font-semibold">Display settings</h2>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <h3 className="flex items-center text-yellow-800 font-medium">
+                <span className="mr-2">⚠️</span>
+                Changing your region could change your rewards program
+              </h3>
+              <p className="text-yellow-700 mt-2">
+                To stay with your current rewards program, keep your region the same. 
+                One Key is currently only available in select regions.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Region
+                </label>
+                <select className="w-full border border-gray-300 rounded-md p-2">
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Europe</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Currency
+                </label>
+                <input 
+                  type="text" 
+                  value="EUR" 
+                  disabled 
+                  className="w-full border border-gray-300 rounded-md p-2 bg-gray-50"
+                />
+              </div>
+
+              <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 mt-4">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+export default Navbar;

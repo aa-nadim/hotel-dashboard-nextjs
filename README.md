@@ -35,3 +35,35 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # react-next
+
+
+## Folder Structure
+```
+react-next/
+├── public
+│   ├──images
+├── src/
+│   ├── app/
+│   │   ├── fonts/
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── 
+│   │   └── 
+│   └── styles/
+│       └── style.css
+├── lib/
+│   └── fontawesome.ts
+├── .eslintrc.json
+├── .gitignore
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── README.md
+├── tailwind.config.ts
+└── tsconfig.json
+```
