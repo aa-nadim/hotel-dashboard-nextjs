@@ -8,6 +8,15 @@ const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState("United States");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+
+  // Define region-currency mapping
+  const regionSettings = {
+    "United States": { currency: "USD" },
+    "Canada": { currency: "CAD" },
+    "Europe": { currency: "EUR" }
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -23,6 +32,12 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleRegionChange = (e) => {
+    const region = e.target.value;
+    setSelectedRegion(region);
+    setSelectedCurrency(regionSettings[region].currency);
   };
 
   // Handle clicking outside modal to close
@@ -70,7 +85,7 @@ const Navbar = () => {
                   <i className="fa-regular fa-globe">
                     <FontAwesomeIcon icon={faGlobe}  />
                   </i>
-                    <span>United States</span>
+                    <span>{selectedRegion}</span>
                   </button>
                 </li>
                 <li>
@@ -103,7 +118,7 @@ const Navbar = () => {
           </div>
         </div>
 
-                {/* Mobile Menu */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
@@ -111,11 +126,10 @@ const Navbar = () => {
                 onClick={handleOpen}
                 className="block px-3 py-2 text-gray-700 hover:text-gray-900 w-full text-left"
               >
-                {/* <Globe className="w-4 h-4 inline mr-2" /> */}
                 <i className="fa-regular fa-globe">
                     <FontAwesomeIcon icon={faGlobe}  />
                 </i>
-                United States
+                {selectedRegion}
               </button>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">
                 Trip Boards
@@ -170,7 +184,11 @@ const Navbar = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Region
                 </label>
-                <select className="w-full border border-gray-300 rounded-md p-2">
+                <select 
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  value={selectedRegion}
+                  onChange={handleRegionChange}
+                >
                   <option>United States</option>
                   <option>Canada</option>
                   <option>Europe</option>
@@ -181,12 +199,15 @@ const Navbar = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Currency
                 </label>
-                <input 
-                  type="text" 
-                  value="EUR" 
-                  disabled 
+                <select 
+                  value={selectedCurrency}
+                  disabled
                   className="w-full border border-gray-300 rounded-md p-2 bg-gray-50"
-                />
+                >
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="CAD">CAD - Canadian Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                </select>
               </div>
 
               <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 mt-4">
