@@ -2,6 +2,9 @@
 import Image from "next/image";
 import React, { useState } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImages } from '@fortawesome/free-solid-svg-icons';
+
 const images = [
   { url: '/images/hotel.jpg', title: 'Beautiful lakefront view with private deck' },
   { url: '/images/hotel1.png', title: 'Cozy cottage exterior with charming red door' },
@@ -71,8 +74,10 @@ export default function Gallery() {
               fill
               className="object-cover"
             />
-            <div className="more-photos mobile-more">
-              <i className="fa-regular fa-images"></i> 30+
+            <div onClick={openModal} className="more-photos mobile-more">
+              <i className="fa-regular fa-images">
+                <FontAwesomeIcon icon={faImages}  />
+              </i> 30+
             </div>
             <div className="dots-indicator"></div>
           </div>
@@ -119,7 +124,9 @@ export default function Gallery() {
                 className="object-cover"
               />
               <div onClick={openModal} className="more-photos desktop-more">
-                <i className="fa-regular fa-images"></i> 30+
+                <i className="fa-regular fa-images">
+                  <FontAwesomeIcon icon={faImages}  />
+                </i> 30+
               </div>
             </div>
           </div>

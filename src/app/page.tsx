@@ -21,14 +21,14 @@ export default function Home() {
           <Location />
           <BookingCard />
         </div>
-      </section>
-      <section className="container">
-        <Rooms />
-        <Spaces />
-        <About />
-        <Amenities />
-        <Question />
-        <Rules />
+          <div className="container">
+            <Rooms />
+            <Spaces />
+            <About />
+            <Amenities />
+            <Question />
+            <Rules />
+        </div>
       </section>
     </>
   );
