@@ -48,7 +48,14 @@ const HotelPage: React.FC = () => {
         <Tabs />
 
         <div className="property-details">
-          <Location address={hotel.address} />
+          <Location 
+          title={hotel.title}
+          guestCount={hotel.guestCount}
+          bedroomCount={hotel.bedroomCount}
+          bathroomCount={hotel.bathroomCount}
+          address={hotel.address}
+          location={hotel.location}
+           />
           <BookingCard hotel={hotel} />
         </div>
 

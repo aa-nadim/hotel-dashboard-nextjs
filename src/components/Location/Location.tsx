@@ -1,4 +1,8 @@
 export default function Location() {
+  const latitude = 58.3019; // Example latitude for Juneau, Alaska
+  const longitude = -134.4197; // Example longitude for Juneau, Alaska
+  const mapSrc = `https://maps.google.com/maps?width=600&height=400&hl=en&q=${latitude},${longitude}&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
+
   return (
     <div className="details-left">
       <a href="#" className="back-link">Entire home</a>
@@ -62,7 +66,7 @@ export default function Location() {
       <div className="row">
         <div className="map-container">
           <iframe
-            src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=Juneau, Alaska&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+            src={mapSrc}
             frameBorder="0"
             scrolling="no"
             marginHeight="0"
