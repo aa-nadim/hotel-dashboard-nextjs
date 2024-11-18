@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link'; 
 import { useState, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +36,7 @@ export default function Header() {
   return (
     <header className="sub-header">
       <div className="header-container">
-        <a href="#" className="back-link">
+      <Link href="/" className="back-link">
           <svg 
             width="16" 
             height="16" 
@@ -47,7 +48,7 @@ export default function Header() {
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           <span className="desktop">See all properties</span>
-        </a>
+        </Link>
         <div className="action-buttons">
           <button className="btn-secondary share-btn" onClick={toggleShareModal}>
             <i className="fa fa-share-alt">

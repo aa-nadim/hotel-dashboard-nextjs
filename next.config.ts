@@ -1,7 +1,19 @@
-import type { NextConfig } from "next";
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  images: {
+    domains: ['localhost'], // Add your local server domain
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000', // Specify the port
+        pathname: '/uploads/**', // Adjust this to match the path to your images
+      },
+    ],
+  },
 };
 
 export default nextConfig;
+

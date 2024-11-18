@@ -1,11 +1,16 @@
 'use client';
 import Image from "next/image";
 import React, { useState } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 
-const images = [
+interface GalleryProps {
+  images?: string[]; // Updated to match API response type
+  title?: string;    // Hotel title for image descriptions
+}
+
+// Default images as fallback
+const defaultImages = [
   { url: '/images/hotel.jpg', title: 'Beautiful lakefront view with private deck' },
   { url: '/images/hotel1.png', title: 'Cozy cottage exterior with charming red door' },
   { url: '/images/hotel2.png', title: 'Spacious living room with panoramic views' },
@@ -13,11 +18,32 @@ const images = [
   { url: '/images/hotel5.jpeg', title: 'Master bedroom with ensuite' }
 ];
 
-export default function Gallery() {
+const Gallery: React.FC<GalleryProps> = ({ images: providedImages, title = "Hotel" }) => {
+  // console.log("Gallery Images:", providedImages);
+
+  const processImages = () => {
+    const baseUrl = 'http://localhost:5000';
+    const imagesToProcess = providedImages?.length ? providedImages : defaultImages.map(img => img.url);
+  
+    return imagesToProcess.map((image, index) => {
+      const url = providedImages?.length
+        ? `${baseUrl}${image}` // Adding base URL only to provided images
+        : image || defaultImages[index % defaultImages.length].url; // Fallback to default images
+      return {
+        url: url,
+        title: `${title} - View ${index + 1}`
+      };
+    });
+  };
+  
+
+
+  const images = processImages();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (!isModalOpen) return;
 
     switch (e.key) {
@@ -51,7 +77,7 @@ export default function Gallery() {
     setIsModalOpen(false);
   };
 
-  const navigateImage = (direction) => {
+  const navigateImage = (direction: 'prev' | 'next') => {
     setCurrentImageIndex(prev => {
       if (direction === 'prev' && prev > 0) {
         return prev - 1;
@@ -62,6 +88,19 @@ export default function Gallery() {
     });
   };
 
+  const ensureMinimumImages = (imgs: typeof images) => {
+    if (imgs.length < 5) {
+      const lastImage = imgs[imgs.length - 1];
+      return [...imgs, ...Array(5 - imgs.length).fill(lastImage)];
+    }
+    return imgs;
+  };
+
+  const displayImages = ensureMinimumImages(images);
+
+
+
+  console.log("displayImages",displayImages);
   return (
     <div className="relative">
       <div className="gallery-container">
@@ -69,15 +108,13 @@ export default function Gallery() {
           {/* Main Image */}
           <div className="main-image image-container">
             <Image
-              src={images[0].url}
-              alt={images[0].title}
+              src={displayImages[0].url}
+              alt={displayImages[0].title}
               fill
               className="object-cover"
             />
             <div onClick={openModal} className="more-photos mobile-more">
-              <i className="fa-regular fa-images">
-                <FontAwesomeIcon icon={faImages}  />
-              </i> 30+
+              <FontAwesomeIcon icon={faImages} /> {images.length}+
             </div>
             <div className="dots-indicator"></div>
           </div>
@@ -86,8 +123,8 @@ export default function Gallery() {
           <div className="thumbnail-column">
             <div className="thumbnail image-container">
               <Image
-                src={images[1].url}
-                alt={images[1].title}
+                src={displayImages[1].url}
+                alt={displayImages[1].title}
                 width={300}
                 height={200}
                 className="object-cover"
@@ -95,8 +132,8 @@ export default function Gallery() {
             </div>
             <div className="thumbnail image-container">
               <Image
-                src={images[2].url}
-                alt={images[2].title}
+                src={displayImages[2].url}
+                alt={displayImages[2].title}
                 width={300}
                 height={200}
                 className="object-cover"
@@ -108,8 +145,8 @@ export default function Gallery() {
           <div className="thumbnail-column">
             <div className="thumbnail image-container">
               <Image
-                src={images[3].url}
-                alt={images[3].title}
+                src={displayImages[3].url}
+                alt={displayImages[3].title}
                 width={300}
                 height={200}
                 className="object-cover"
@@ -117,16 +154,14 @@ export default function Gallery() {
             </div>
             <div className="thumbnail image-container">
               <Image
-                src={images[4].url}
-                alt={images[4].title}
+                src={displayImages[4].url}
+                alt={displayImages[4].title}
                 width={300}
                 height={200}
                 className="object-cover"
               />
               <div onClick={openModal} className="more-photos desktop-more">
-                <i className="fa-regular fa-images">
-                  <FontAwesomeIcon icon={faImages}  />
-                </i> 30+
+                <FontAwesomeIcon icon={faImages} /> {images.length}+
               </div>
             </div>
           </div>
@@ -142,7 +177,7 @@ export default function Gallery() {
           >
             ×
           </button>
-          
+
           <div className="relative w-full max-w-4xl mx-4">
             <div className="relative aspect-video">
               <Image
@@ -152,7 +187,7 @@ export default function Gallery() {
                 className="object-contain"
               />
             </div>
-            
+
             {currentImageIndex > 0 && (
               <button
                 onClick={() => navigateImage('prev')}
@@ -161,7 +196,7 @@ export default function Gallery() {
                 ❮
               </button>
             )}
-            
+
             {currentImageIndex < images.length - 1 && (
               <button
                 onClick={() => navigateImage('next')}
@@ -170,7 +205,7 @@ export default function Gallery() {
                 ❯
               </button>
             )}
-            
+
             <div className="gallery-info">
               <h3 className="image-title">
                 {images[currentImageIndex].title}
@@ -184,4 +219,6 @@ export default function Gallery() {
       )}
     </div>
   );
-}
+};
+
+export default Gallery;

@@ -1,8 +1,4 @@
-"use client";
-
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -11,7 +7,6 @@ const Navbar = () => {
   const [selectedRegion, setSelectedRegion] = useState("United States");
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
-  // Define region-currency mapping
   const regionSettings = {
     "United States": { currency: "USD" },
     "Canada": { currency: "CAD" },
@@ -20,18 +15,32 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape') {
+        setModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
 
   const handleClose = () => {
     setModalOpen(false);
   };
 
-  const handleOpen = () => {
+  const handleOpen = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setModalOpen(true);
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleRegionChange = (e) => {
@@ -40,9 +49,8 @@ const Navbar = () => {
     setSelectedCurrency(regionSettings[region].currency);
   };
 
-  // Handle clicking outside modal to close
   const handleOverlayClick = (e) => {
-    if (e.target.classList.contains('nav-modal-overlay')) {
+    if (e.target === e.currentTarget) {
       handleClose();
     }
   };
@@ -50,41 +58,39 @@ const Navbar = () => {
   if (!isClient) return null;
 
   return (
-    <div className="relative">
-      <nav className="bg-white shadow-md">
+    <>
+    {/* Spacer div to push content below fixed navbar */}
+    <div className="h-16 mb-5" />
+    <div className="relative mb-5">
+      <nav className="bg-white shadow-md fixed w-full top-0 z-40">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between h-16">
             <div className="flex-shrink-0 flex items-center">
-              {/* Logo placeholder */}
-              <div className="w-8 h-8 bg-gray-200 rounded">
-                
-              </div>
+              <div className="w-8 h-8 bg-gray-200 rounded" />
             </div>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center">
               <button
-                onClick={toggleMobileMenu}
-                className="text-gray-600 hover:text-gray-900"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-md text-gray-600 hover:text-gray-900"
                 aria-label="Toggle menu"
               >
-                <i className="fa-regular fa-circle-user">
-                  <FontAwesomeIcon icon={faCircleUser}  />
-                </i>
+                <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
               </button>
             </div>
             
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center">
               <ul className="flex space-x-8">
                 <li>
                   <button 
                     onClick={handleOpen}
-                    className="flex items-center text-gray-700 hover:text-gray-900"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
                   >
-                  <i className="fa-regular fa-globe">
-                    <FontAwesomeIcon icon={faGlobe}  />
-                  </i>
+                    <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                     <span>{selectedRegion}</span>
                   </button>
                 </li>
@@ -109,7 +115,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                  <a href="#" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors">
                     Sign in
                   </a>
                 </li>
@@ -118,18 +124,17 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg">
             <div className="px-2 pt-2 pb-3 space-y-1">
               <button 
                 onClick={handleOpen}
-                className="block px-3 py-2 text-gray-700 hover:text-gray-900 w-full text-left"
+                className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-gray-900 w-full"
               >
-                <i className="fa-regular fa-globe">
-                    <FontAwesomeIcon icon={faGlobe}  />
-                </i>
-                {selectedRegion}
+                <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>{selectedRegion}</span>
               </button>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">
                 Trip Boards
@@ -150,22 +155,23 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-     
 
       {isModalOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center nav-modal-overlay"
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"
           onClick={handleOverlayClick}
         >
           <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <div className="flex justify-start items-center mb-6 gap-4">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold">Display settings</h2>
               <button 
                 onClick={handleClose}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 p-1"
               >
-                ✕
+                <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
               </button>
-              <h2 className="text-xl font-semibold">Display settings</h2>
             </div>
 
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
@@ -210,7 +216,10 @@ const Navbar = () => {
                 </select>
               </div>
 
-              <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 mt-4">
+              <button 
+                onClick={handleClose}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 mt-4 transition-colors"
+              >
                 Save
               </button>
             </div>
@@ -218,6 +227,7 @@ const Navbar = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
