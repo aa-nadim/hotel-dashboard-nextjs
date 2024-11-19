@@ -1,3 +1,5 @@
+// src/components/Tabs/Tabs.tsx
+
 export default function Tabs() {
   return (
      <div className="tabs">

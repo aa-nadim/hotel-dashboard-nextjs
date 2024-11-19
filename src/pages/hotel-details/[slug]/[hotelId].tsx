@@ -46,7 +46,7 @@ const HotelPage: React.FC<HotelPageProps> = ({ hotel }) => {
           <About title={hotel.title} description={hotel.description} />
           <Amenities amenities={hotel.amenities} />
           <Question questions={hotel.questions} />
-          <Rules rules={hotel.rules} />
+          <Rules title={hotel.title} />
         </div>
       </section>
     </div>

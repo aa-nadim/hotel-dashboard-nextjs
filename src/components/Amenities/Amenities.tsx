@@ -1,3 +1,4 @@
+// // src/components/Amenities/Amenities.tsx
 interface AmenitiesProps {
     amenities?: string[]; 
   }

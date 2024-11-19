@@ -1,3 +1,4 @@
+// src/components/Navbar/Navbar.tsx
 import React, { useState, useEffect } from 'react';
 
 const Navbar = () => {
@@ -194,6 +195,7 @@ const Navbar = () => {
                   className="w-full border border-gray-300 rounded-md p-2"
                   value={selectedRegion}
                   onChange={handleRegionChange}
+                  aria-label="Region" 
                 >
                   <option>United States</option>
                   <option>Canada</option>

@@ -1,3 +1,4 @@
+// src/components/Rules/Rules.tsx
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

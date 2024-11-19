@@ -1,3 +1,4 @@
+// src/components/BookingCard/BookingCard.tsx
 'use client';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -120,6 +121,7 @@ export default function BookingCard() {
               value={dates.startDate}
               onChange={(e) => handleDateChange('startDate', e.target.value)}
               className="mt-1 block w-full rounded-md border border-gray-300 p-2"
+              data-testid="start-date-input" // Added for testing
             />
           </div>
           <div>
@@ -203,6 +205,7 @@ export default function BookingCard() {
                 </label>
               </div>
 
+              {/* Done Button */}
               <button
                 onClick={handleDone}
                 className="w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700"
@@ -213,7 +216,6 @@ export default function BookingCard() {
           )}
         </div>
 
-        {/* Total Section */}
         {!showTravelersContent && (
           <>
             <div className="space-y-2 border-t pt-4">

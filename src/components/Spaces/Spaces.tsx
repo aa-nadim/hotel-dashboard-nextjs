@@ -1,3 +1,5 @@
+// src/components/Spaces/Spaces.tsx
+
 import React from 'react';
 
 interface SpacesProps {

@@ -1,3 +1,5 @@
+// src/components/Rooms/Rooms.tsx
+
 import React from 'react';
 
 interface RoomsProps {

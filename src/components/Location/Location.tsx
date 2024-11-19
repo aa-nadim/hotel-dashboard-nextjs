@@ -1,3 +1,4 @@
+// src/components/Location/Location.tsx
 import React from "react";
 
 interface Address {
