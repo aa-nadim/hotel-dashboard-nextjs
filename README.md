@@ -82,3 +82,6 @@ hotel-dashboard-nextjs/
 └── README.md
 ```
 
+```
+npx jest src/pages/__tests__/index.test.tsx
+```

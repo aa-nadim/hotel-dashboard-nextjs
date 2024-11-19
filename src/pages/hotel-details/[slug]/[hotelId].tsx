@@ -1,4 +1,5 @@
 // src/pages/hotel-details/[slug]/[hotelId].tsx
+
 import { GetServerSideProps } from 'next';
 import { slugify } from '@/utils/slugify';
 import Header from '@/components/Header/Header';
