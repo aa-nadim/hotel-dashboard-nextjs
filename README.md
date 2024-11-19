@@ -1,6 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+## Overview
 
-## Getting Started
+This repository contains Next.js code for a vacation rental website. The code fetches data from a RESTful API at `http://localhost:5000`, displaying dynamic information and handling various functionalities, including user interaction options, guest management, an image gallery, sharing features, and more.
+
+## Technologies
+
+• React and Next.js
+• TypeScript
+
+
+## Installation
+
+### Step 1: Clone the Repository(back-end)
 
 ```bash
 git clone https://github.com/aa-nadim/express-hotel-api.git
@@ -11,77 +21,55 @@ npm i
 
 npm run dev
 ```
-`http://localhost:5000`
 
+back-end run in ===> `http://localhost:5000`
 
+### Step 2: Clone the Repository(front-end)
 
 ```bash
 git clone https://github.com/aa-nadim/hotel-dashboard-nextjs.git
 
-cd ehotel-dashboard-nextjs
+cd hotel-dashboard-nextjs
 
 npm i
 
 npm run dev
 ```
 
-## Folder Structure
-```
-hotel-dashboard-nextjs/
-├── public/
-│   └── images/
-├── src/
-│   ├── components/
-│   │   ├── Layout.tsx
-│   │   ├── Navbar/
-│   │   |   └── Navbar.tsx
-│   │   ├── Header/
-│   │   |   └── Header.tsx
-│   │   ├── About/
-│   │   |   └── About.tsx
-│   │   ├── Amenities/
-│   │   |   └── Amenities.tsx
-│   │   ├── BookingCard/
-│   │   |   └── BookingCard.tsx
-│   │   ├── Gallery/
-│   │   |   └── Gallery.tsx
-│   │   ├── Location/
-│   │   |   └── Location.tsx
-│   │   ├── Question/
-│   │   |   └── Question.tsx
-│   │   ├── Rooms/
-│   │   |   └── Rooms.tsx
-│   │   ├── Rules/
-│   │   |   └── Rules.tsx
-│   │   ├── Spaces/
-│   │   |   └── Spaces.tsx
-│   │   ├── Tabs/
-│   │   |   └── Tabs.tsx
-│   │   └── Footer/
-│   │       └── Footer.tsx
-│   ├── pages/
-│   │   ├── 404.tsx
-│   │   ├── _app.tsx
-│   │   ├── index.tsx
-│   |   └── hotel-details/
-│   |       └── [slug]/
-│   │           └── [hotelId].tsx
-|   ├── styles/
-│   |   └── globals.css
-|   └── utils/
-│       └── slugify.ts
-├── .eslintrc.json
-├── .gitignore
-├── next-env.d.ts
-├── next.config.ts
-├── package-lock.json
-├── package.json
-├── postcss.config.mjs
-├── tailwind.config.js
-├── tsconfig.json
-└── README.md
-```
+front-end run in ===> `http://localhost:3000/`
 
-```
-npx jest src/pages/__tests__/index.test.tsx
+
+## Features
+
+### Landing Page ===>  `http://localhost:3000/`
+
+Show all Hotels' Card
+
+### Specific Hotel Page ===> `http://localhost:3000/hotel-details/{slug}/{hotel-id}`
+
+if you click one card in Landing Page `http://localhost:3000/`, it go to the `http://localhost:3000/hotel-details/{slug}/{hotel-id}`
+
+### Image Gallery
+
+Displays dynamic images with an option to view each image in fullscreen mode.
+
+### Region & Currency: 
+
+Allows users to select their region, and automatically adjusts the currency according to the selected region.
+
+### Guest Management: 
+
+Allows users to specify the number of adults and children.
+
+### Sharing Options 
+
+Provides options for sharing the listing via a link or copying the link to the clipboard.
+
+### Heart Button 
+
+Allows users to favorite a listing with a heart icon, which persists across sessions using local storage.
+
+## Testing
+```bash
+npm test
 ```

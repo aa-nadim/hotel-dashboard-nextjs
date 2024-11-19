@@ -4,25 +4,21 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import '../styles/globals.css';
+import { DefaultSeo } from 'next-seo';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    // Get the current path
     const path = router.asPath;
-    
-    // Define allowed paths using regex
     const allowedPaths = [
-      /^\/$/,  // Home page
-      /^\/hotel-details\/[\w-]+\/[\w-]+$/, // Hotel details pages
-      /^\/404$/, // Allow access to 404 page itself
+      /^\/$/,  
+      /^\/hotel-details\/[\w-]+\/[\w-]+$/, 
+      /^\/404$/, 
     ];
 
-    // Check if the current path matches any allowed paths
     const isAllowedPath = allowedPaths.some(regex => regex.test(path));
 
-    // If path is not allowed and not already on 404, redirect to 404
     if (!isAllowedPath && path !== '/404') {
       router.push('/404');
     }
@@ -30,6 +26,30 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Layout>
+      <DefaultSeo
+        titleTemplate="%s | Vacation Rentals"
+        defaultTitle="Vacation Rentals"
+        description="Find the best vacation rentals with amazing amenities, perfect for your next getaway."
+        openGraph={{
+          type: 'website',
+          locale: 'en_US',
+          url: 'https://example.com',
+          site_name: 'Vacation Rentals',
+          images: [
+            {
+              url: 'https://example.com/og-image.jpg',
+              width: 800,
+              height: 600,
+              alt: 'Vacation Rentals',
+            },
+          ],
+        }}
+        twitter={{
+          handle: '@username',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+      />
       <Component {...pageProps} />
     </Layout>
   );
