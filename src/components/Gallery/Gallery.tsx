@@ -5,11 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 
 interface GalleryProps {
-  images?: string[]; // Updated to match API response type
-  title?: string;    // Hotel title for image descriptions
+  images?: string[]; 
+  title?: string;    
 }
 
-// Default images as fallback
 const defaultImages = [
   { url: '/images/hotel.jpg', title: 'Beautiful lakefront view with private deck' },
   { url: '/images/hotel1.png', title: 'Cozy cottage exterior with charming red door' },
@@ -27,8 +26,8 @@ const Gallery: React.FC<GalleryProps> = ({ images: providedImages, title = "Hote
   
     return imagesToProcess.map((image, index) => {
       const url = providedImages?.length
-        ? `${baseUrl}${image}` // Adding base URL only to provided images
-        : image || defaultImages[index % defaultImages.length].url; // Fallback to default images
+        ? `${baseUrl}${image}` 
+        : image || defaultImages[index % defaultImages.length].url; 
       return {
         url: url,
         title: `${title} - View ${index + 1}`

@@ -1,13 +1,71 @@
-export default function Location() {
-  const latitude = 58.3019; // Example latitude for Juneau, Alaska
-  const longitude = -134.4197; // Example longitude for Juneau, Alaska
-  const mapSrc = `https://maps.google.com/maps?width=600&height=400&hl=en&q=${latitude},${longitude}&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
+import React from "react";
+
+interface Address {
+  street?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
+}
+
+interface LocationInfo {
+  name: string;
+  driveTime: string;
+  iconClass: string;
+}
+
+interface LocationProps {
+  title?: string;
+  guestCount?: number;
+  bedroomCount?: number;
+  bathroomCount?: number;
+  address?: Address;
+  location?: { latitude?: number; longitude?: number };
+  amenities?: string[];
+  nearbyLocations?: LocationInfo[];
+}
+
+const Location: React.FC<LocationProps> = ({
+  title = "Default Vacation Home",
+  guestCount = 4,
+  bedroomCount = 2,
+  bathroomCount = 1,
+  address = {
+    street: "123 Main St",
+    city: "Default City",
+    state: "DC",
+    country: "Default Country",
+    zipCode: "00000",
+  },
+  location = { latitude: 58.3019, longitude: -134.4197 },
+  amenities = [
+    "🍽 Kitchen",
+    "🚗 Parking available",
+    "🧼 Washer",
+    "🌊 Ocean view",
+    "🧺 Dryer",
+    "🌳 Outdoor Space",
+  ],
+  nearbyLocations = [
+    { name: "Auke Bay", driveTime: "6 min drive", iconClass: "fa-solid fa-location-dot" },
+    { name: "University of Alaska–Southeast", driveTime: "10 min drive", iconClass: "fa-solid fa-location-dot" },
+    { name: "Mendenhall Golf Course", driveTime: "14 min drive", iconClass: "fa-solid fa-location-dot" },
+    { name: "Juneau, AK (JNU–Juneau Intl.)", driveTime: "14 min drive", iconClass: "fa-solid fa-plane" },
+  ],
+}) => {
+  const formattedAddress = `${address?.street || "N/A"}, ${address?.city || "N/A"}, ${
+    address?.state || "N/A"
+  }, ${address?.country || "N/A"} ${address?.zipCode || ""}`;
+
+  const mapSrc = location.latitude && location.longitude
+    ? `https://maps.google.com/maps?width=600&height=400&hl=en&q=${location.latitude},${location.longitude}&t=&z=14&ie=UTF8&iwloc=B&output=embed`
+    : `https://maps.google.com/maps?width=600&height=400&hl=en&q=58.3019,-134.4197&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
 
   return (
     <div className="details-left">
       <a href="#" className="back-link">Entire home</a>
 
-      <h1 className="listing-title">Juneau Vacation Home: Stunning View + Beach Access</h1>
+      <h1 className="text-3xl">{title}</h1>
       <div className="rating">
         <span className="rating-badge">9.8</span>
         <span>Exceptional</span>
@@ -19,68 +77,48 @@ export default function Location() {
       <div className="property-stats">
         <div className="stat-item">
           <i className="fa fa-bed" aria-hidden="true"></i>
-          <span>2 bedrooms</span>
+          <span>{bedroomCount} bedroom{bedroomCount > 1 ? "s" : ""}</span>
         </div>
         <div className="stat-item">
           <i className="fa fa-bath" aria-hidden="true"></i>
-          <span>1 bathroom</span>
+          <span>{bathroomCount} bathroom{bathroomCount > 1 ? "s" : ""}</span>
         </div>
         <div className="stat-item">
           <i className="fa fa-users" aria-hidden="true"></i>
-          <span>Sleeps 4</span>
+          <span>Sleeps {guestCount}</span>
         </div>
         <div className="stat-item">
-          <i className="fa fa-home" aria-hidden="true"></i>
-          <span>1155 sq ft</span>
+          <i className="fa fa-map-marker-alt" aria-hidden="true"></i>
+          <span>{formattedAddress}</span>
         </div>
       </div>
 
       <h2>Popular amenities</h2>
       <div className="property-stats">
-        <div className="stat-item">
-          <i className="fas fa-drumstick-bite"></i>
-          <span>Barbecue grill</span>
-        </div>
-        <div className="stat-item">
-          <i className="fa-solid fa-soap"></i>
-          <span>Washer</span>
-        </div>
-        <div className="stat-item">
-          <i className="fa fa-cutlery" aria-hidden="true"></i>
-          <span>Kitchen</span>
-        </div>
-        <div className="stat-item">
-          <i className="fa fa-car" aria-hidden="true"></i>
-          <span>Parking available</span>
-        </div>
-        <div className="stat-item">
-          <i className="fas fa-tree"></i>
-          <span>Outdoor Space</span>
-        </div>
-        <div className="stat-item">
-          <i className="fa fa-wifi" aria-hidden="true"></i>
-          <span>WiFi</span>
-        </div>
+        {amenities.map((amenity, index) => (
+          <div key={index} className="stat-item">
+            <i className="fa fa-check-circle" aria-hidden="true"></i>
+            <span>{amenity}</span>
+          </div>
+        ))}
       </div>
 
+      <h2>Location</h2>
       <div className="row">
         <div className="map-container">
           <iframe
             src={mapSrc}
-            frameBorder="0"
-            scrolling="no"
-            marginHeight="0"
-            marginWidth="0"
             style={{
               width: "100%",
               height: "100%",
               borderRadius: "8px",
               minHeight: "300px",
             }}
+            title="Location Map"
           ></iframe>
           <div className="text-container">
             <h4>
-              <b>Juneau, Alaska</b>
+              <b>{formattedAddress}</b>
             </h4>
             <a href="#" className="see-all">View in a map</a>
           </div>
@@ -88,38 +126,21 @@ export default function Location() {
 
         <div className="text-container">
           <div className="info-list">
-            <div className="info-row">
-              <i className="fa-solid fa-location-dot"></i>
-              <div className="location-info">
-                <span className="location">Auke Bay</span>
-                <span className="drive-time">6 min drive</span>
+            {nearbyLocations.map((loc, index) => (
+              <div key={index} className="info-row">
+                <i className={loc.iconClass}></i>
+                <div className="location-info">
+                  <span className="location">{loc.name}</span>
+                  <span className="drive-time">{loc.driveTime}</span>
+                </div>
               </div>
-            </div>
-            <div className="info-row">
-              <i className="fa-solid fa-location-dot"></i>
-              <div className="location-info">
-                <span className="location">University of Alaska–Southeast</span>
-                <span className="drive-time">10 min drive</span>
-              </div>
-            </div>
-            <div className="info-row">
-              <i className="fa-solid fa-location-dot"></i>
-              <div className="location-info">
-                <span className="location">Mendenhall Golf Course</span>
-                <span className="drive-time">14 min drive</span>
-              </div>
-            </div>
-            <div className="info-row">
-              <i className="fa-solid fa-plane"></i>
-              <div className="location-info">
-                <span className="location">Juneau, AK (JNU–Juneau Intl.)</span>
-                <span className="drive-time">14 min drive</span>
-              </div>
-            </div>
+            ))}
             <a href="#" className="more-info-link">See more about this area →</a>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Location;

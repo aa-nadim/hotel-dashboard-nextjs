@@ -1,18 +1,23 @@
 import Image from "next/image";
+import React from "react";
 
-export default function About() {
+interface AboutProps {
+  title?: string;
+  description?: string;
+}
+
+const About: React.FC<AboutProps> = ({
+  title = "Default Vacation Home: Stunning View + Beach Access",
+  description = `Escape to the mountains and experience the great outdoors at this lovely vacation rental! 
+  Perched on a picturesque shore, this home is the perfect getaway for those looking to enjoy a relaxing retreat surrounded by nature. 
+  Spend your day fishing, exploring the coastline, or hiking the nearby trails. After your adventure, relax and admire the breathtaking views!`,
+}) => {
   return (
     <section className="about-property">
       <h2>About this property</h2>
 
-      <h3 className="property-title">Juneau Vacation Home: Stunning View + Beach Access</h3>
-      <p className="property-description">
-        Escape to the mountains and experience the great outdoors at this lovely Juneau vacation rental!
-        Perched on the shore of Lena Cove, this 2-bedroom, 1-bath home is the perfect getaway for those
-        looking to enjoy a relaxing retreat surrounded by nature. Spend your day fishing for King Salmon,
-        exploring Lena Beach and the rocky coastline, or hiking the nearby trails. After your outdoor
-        adventure, kick back on the private deck and admire the breathtaking panoramic views!
-      </p>
+      <h3 className="property-title">{title}</h3>
+      <p className="property-description">{description}</p>
       <p>-- THE PROPERTY --</p>
       <p>
         2,100/2,100 | 1,115 Sq Ft | 2 Private Decks | Lena Cove & Mountain Views | 2 Regular Provider
@@ -96,3 +101,6 @@ export default function About() {
     </section>
   );
 }
+
+
+export default About;

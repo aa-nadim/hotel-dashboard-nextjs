@@ -42,8 +42,8 @@ const HotelPage: React.FC = () => {
 
       <section className="main-content">
       <Gallery 
-        images={hotel.images}  // Array of image URLs from API
-        title={hotel.title}    // Hotel title for image descriptions
+        images={hotel.images}  
+        title={hotel.title}    
       />
         <Tabs />
 
@@ -53,6 +53,7 @@ const HotelPage: React.FC = () => {
           guestCount={hotel.guestCount}
           bedroomCount={hotel.bedroomCount}
           bathroomCount={hotel.bathroomCount}
+          amenities={hotel.amenities}
           address={hotel.address}
           location={hotel.location}
            />
@@ -60,9 +61,16 @@ const HotelPage: React.FC = () => {
         </div>
 
         <div className="container">
-          <Rooms rooms={hotel.rooms} />
+          <Rooms 
+          guestCount={hotel.guestCount}
+          bedroomCount={hotel.bedroomCount}
+          bathroomCount={hotel.bathroomCount}
+          />
           <Spaces spaces={hotel.spaces} />
-          <About description={hotel.description} />
+          <About 
+          title={hotel.title}
+          description={hotel.description} 
+          />
           <Amenities amenities={hotel.amenities} />
           <Question questions={hotel.questions} />
           <Rules rules={hotel.rules} />
