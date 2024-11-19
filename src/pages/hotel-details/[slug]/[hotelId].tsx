@@ -1,5 +1,6 @@
-// src/pages/hotel/[hotelId].tsx
+// src/pages/hotel-details/[slug]/[hotelId].tsx
 import { GetServerSideProps } from 'next';
+import { slugify } from '@/utils/slugify';
 import Header from '@/components/Header/Header';
 import Gallery from '@/components/Gallery/Gallery';
 import Tabs from '@/components/Tabs/Tabs';
@@ -13,12 +14,11 @@ import Question from '@/components/Question/Question';
 import Rules from '@/components/Rules/Rules';
 
 interface HotelPageProps {
-  hotel: any;
+  hotel: any; // Replace 'any' with your hotel type
 }
 
 const HotelPage: React.FC<HotelPageProps> = ({ hotel }) => {
-  if (!hotel) return <p>Hotel not found</p>;
-
+  // Remove the local error check since we'll handle it in getServerSideProps
   return (
     <div className="mt-3">
       <Header hotel={hotel} />
@@ -56,16 +56,46 @@ const HotelPage: React.FC<HotelPageProps> = ({ hotel }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { hotelId } = params!;
+  if (!params?.hotelId || !params?.slug) {
+    return {
+      notFound: true, // This will show the 404 page
+    };
+  }
+
+  const { hotelId, slug } = params;
 
   try {
-    const res = await fetch(`http://localhost:5000/api/hotel/${hotelId}`);
-    const hotel = await res.json();
-    if (!hotel) {
+    const response = await fetch(`http://localhost:5000/api/hotel/${hotelId}`);
+    
+    // Check if the response is ok
+    if (!response.ok) {
       return {
-        notFound: true, // Optional: If the hotel is not found, you can show a 404 page.
+        notFound: true, // This will show the 404 page
       };
     }
+
+    const hotel = await response.json();
+
+    // If no hotel data is returned
+    if (!hotel || Object.keys(hotel).length === 0) {
+      return {
+        notFound: true, // This will show the 404 page
+      };
+    }
+
+    // Generate the correct slug from the hotel title
+    const correctSlug = slugify(hotel.title);
+
+    // If the slug in the URL doesn't match the correct slug, redirect
+    if (slug !== correctSlug) {
+      return {
+        redirect: {
+          destination: `/hotel-details/${correctSlug}/${hotelId}`,
+          permanent: true,
+        },
+      };
+    }
+
     return {
       props: {
         hotel,
@@ -74,9 +104,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   } catch (error) {
     console.error('Error fetching hotel details:', error);
     return {
-      props: {
-        hotel: null,
-      },
+      notFound: true, // This will show the 404 page
     };
   }
 };
