@@ -5,6 +5,7 @@ This repository contains Next.js code for a vacation rental website. The code fe
 ## Technologies
 
 • React and Next.js
+
 • TypeScript
 
 
