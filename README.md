@@ -42,13 +42,13 @@ front-end run in ===> `http://localhost:3000/`
 
 ## Features
 
-### Landing Page ===>  `http://localhost:3000/`
+### Landing Page 
 
-Show all Hotels' Card
+Show all Hotels' Card in ===>  `http://localhost:3000/`
 
-### Specific Hotel Page ===> `http://localhost:3000/hotel-details/{slug}/{hotel-id}`
+### Specific Hotel Page
 
-if you click one card in Landing Page `http://localhost:3000/`, it go to the `http://localhost:3000/hotel-details/{slug}/{hotel-id}`
+if you click one card in Landing Page `http://localhost:3000/`, it go to the  ===> `http://localhost:3000/hotel-details/{slug}/{hotel-id}`
 
 ### Image Gallery
 
