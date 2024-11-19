@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export default function BookingCard() {
+  const [isClient, setIsClient] = useState(false);
   const [dates, setDates] = useState({
     startDate: '',
     endDate: '',
@@ -10,23 +11,28 @@ export default function BookingCard() {
     formattedEnd: ''
   });
   const [showTravelersContent, setShowTravelersContent] = useState(false);
-  const [travelers, setTravelers] = useState(() => {
-    // Initialize from localStorage if available, otherwise use defaults
+  const [travelers, setTravelers] = useState({ adults: 2, children: 0 });
+  const [pets, setPets] = useState(false);
+
+  // Set isClient to true when the component is mounted (client-side rendering)
+  useEffect(() => {
+    setIsClient(true);
+
     if (typeof window !== 'undefined') {
-      return {
+      setTravelers({
         adults: parseInt(localStorage.getItem('travelers_adults') || '2'),
         children: parseInt(localStorage.getItem('travelers_children') || '0')
-      };
+      });
     }
-    return { adults: 2, children: 0 };
-  });
-  const [pets, setPets] = useState(false);
+  }, []);
 
   // Save travelers count to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('travelers_adults', travelers.adults.toString());
-    localStorage.setItem('travelers_children', travelers.children.toString());
-  }, [travelers]);
+    if (isClient) {
+      localStorage.setItem('travelers_adults', travelers.adults.toString());
+      localStorage.setItem('travelers_children', travelers.children.toString());
+    }
+  }, [travelers, isClient]);
 
   const formatDate = (date: string) => {
     if (!date) return '';
@@ -64,6 +70,10 @@ export default function BookingCard() {
 
   // Get today's date in YYYY-MM-DD format for min date attribute
   const today = new Date().toISOString().split('T')[0];
+
+  if (!isClient) {
+    return null; // Prevent rendering before client-side JavaScript runs
+  }
 
   return (
     <div className="mx-auto max-w-md rounded-lg border border-gray-200 p-6 shadow-lg">

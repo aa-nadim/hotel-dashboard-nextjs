@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+// src/pages/hotel/[hotelId].tsx
+import { GetServerSideProps } from 'next';
 import Header from '@/components/Header/Header';
 import Gallery from '@/components/Gallery/Gallery';
 import Tabs from '@/components/Tabs/Tabs';
@@ -12,65 +12,40 @@ import Amenities from '@/components/Amenities/Amenities';
 import Question from '@/components/Question/Question';
 import Rules from '@/components/Rules/Rules';
 
-const HotelPage: React.FC = () => {
-  const [hotel, setHotel] = useState<any | null>(null);
-  const router = useRouter();
-  const { hotelId } = router.query;
+interface HotelPageProps {
+  hotel: any;
+}
 
-  useEffect(() => {
-    if (!hotelId) return;
-
-    const fetchHotelDetails = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/hotel/${hotelId}`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setHotel(data);
-      } catch (error) {
-        console.error('Error fetching hotel details:', error);
-      }
-    };
-
-    fetchHotelDetails();
-  }, [hotelId]);
-
-  if (hotel === null) return <p>Loading...</p>;
+const HotelPage: React.FC<HotelPageProps> = ({ hotel }) => {
+  if (!hotel) return <p>Hotel not found</p>;
 
   return (
-    <div className='mt-3'>
+    <div className="mt-3">
       <Header hotel={hotel} />
-
       <section className="main-content">
-      <Gallery 
-        images={hotel.images}  
-        title={hotel.title}    
-      />
+        <Gallery images={hotel.images} title={hotel.title} />
         <Tabs />
-
         <div className="property-details">
-          <Location 
-          title={hotel.title}
-          guestCount={hotel.guestCount}
-          bedroomCount={hotel.bedroomCount}
-          bathroomCount={hotel.bathroomCount}
-          amenities={hotel.amenities}
-          address={hotel.address}
-          location={hotel.location}
-           />
+          <Location
+            title={hotel.title}
+            guestCount={hotel.guestCount}
+            bedroomCount={hotel.bedroomCount}
+            bathroomCount={hotel.bathroomCount}
+            amenities={hotel.amenities}
+            address={hotel.address}
+            location={hotel.location}
+          />
           <BookingCard hotel={hotel} />
         </div>
 
         <div className="container">
-          <Rooms 
-          guestCount={hotel.guestCount}
-          bedroomCount={hotel.bedroomCount}
-          bathroomCount={hotel.bathroomCount}
+          <Rooms
+            guestCount={hotel.guestCount}
+            bedroomCount={hotel.bedroomCount}
+            bathroomCount={hotel.bathroomCount}
           />
           <Spaces spaces={hotel.spaces} />
-          <About 
-          title={hotel.title}
-          description={hotel.description} 
-          />
+          <About title={hotel.title} description={hotel.description} />
           <Amenities amenities={hotel.amenities} />
           <Question questions={hotel.questions} />
           <Rules rules={hotel.rules} />
@@ -78,6 +53,32 @@ const HotelPage: React.FC = () => {
       </section>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { hotelId } = params!;
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/hotel/${hotelId}`);
+    const hotel = await res.json();
+    if (!hotel) {
+      return {
+        notFound: true, // Optional: If the hotel is not found, you can show a 404 page.
+      };
+    }
+    return {
+      props: {
+        hotel,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching hotel details:', error);
+    return {
+      props: {
+        hotel: null,
+      },
+    };
+  }
 };
 
 export default HotelPage;

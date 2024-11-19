@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+// src/pages/index.tsx
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 
 type Hotel = {
   hotelId: string;
@@ -8,19 +9,12 @@ type Hotel = {
   imageUrl?: string;
 };
 
-export default function Home() {
-  const [hotels, setHotels] = useState<Hotel[]>([]);
-  const router = useRouter();
+interface HomeProps {
+  hotels: Hotel[];
+}
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/hotels")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched hotels:", data);
-        setHotels(data);
-      })
-      .catch((error) => console.error("Error fetching hotels:", error));
-  }, []);
+export default function Home({ hotels }: HomeProps) {
+  const router = useRouter();
 
   return (
     <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -33,7 +27,7 @@ export default function Home() {
           <a>
             <img
               className="p-8 rounded-t-lg object-cover"
-              src={hotel.imageUrl || "/images/placeholder-image.png"}
+              src={hotel.imageUrl || '/images/placeholder-image.png'}
               alt={hotel.title}
             />
           </a>
@@ -61,20 +55,28 @@ export default function Home() {
                 5.0
               </span>
             </div>
-            {/* <div className="flex items-center justify-between">
-              <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                $599
-              </span>
-              <a
-                href="#"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Add to cart
-              </a>
-            </div> */}
           </div>
         </div>
       ))}
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/api/hotels');
+    const hotels: Hotel[] = await res.json();
+    return {
+      props: {
+        hotels,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching hotels:', error);
+    return {
+      props: {
+        hotels: [],
+      },
+    };
+  }
+};
