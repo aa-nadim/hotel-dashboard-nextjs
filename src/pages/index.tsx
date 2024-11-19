@@ -1,6 +1,5 @@
 // src/pages/index.tsx
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { slugify } from '@/utils/slugify';
 
@@ -28,10 +27,12 @@ export default function Home({ hotels }: HomeProps) {
             src={hotel.imageUrl || '/images/placeholder-image.png'}
             alt={hotel.title}
           />
+
           <div className="px-5 pb-5">
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {hotel.title}
             </h5>
+
             <div className="flex items-center mt-2.5 mb-5">
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
                 <svg
@@ -55,6 +56,7 @@ export default function Home({ hotels }: HomeProps) {
   );
 }
 
+// Server-side fetching of hotel data
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await fetch('http://localhost:5000/api/hotels');
@@ -65,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     };
   } catch (error) {
-    console.error('Error fetching hotels:', error);
+    // console.error('Error fetching hotels:', error);
     return {
       props: {
         hotels: [],
