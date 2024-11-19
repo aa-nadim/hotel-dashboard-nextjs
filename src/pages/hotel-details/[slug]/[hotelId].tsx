@@ -1,5 +1,3 @@
-// src/pages/hotel-details/[slug]/[hotelId].tsx
-
 import { GetServerSideProps } from 'next';
 import { slugify } from '@/utils/slugify';
 import Header from '@/components/Header/Header';
@@ -15,11 +13,10 @@ import Question from '@/components/Question/Question';
 import Rules from '@/components/Rules/Rules';
 
 interface HotelPageProps {
-  hotel: any; // Replace 'any' with your hotel type
+  hotel: any; 
 }
 
 const HotelPage: React.FC<HotelPageProps> = ({ hotel }) => {
-  // Remove the local error check since we'll handle it in getServerSideProps
   return (
     <div className="mt-3">
       <Header hotel={hotel} />
@@ -59,7 +56,7 @@ const HotelPage: React.FC<HotelPageProps> = ({ hotel }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.hotelId || !params?.slug) {
     return {
-      notFound: true, // This will show the 404 page
+      notFound: true, 
     };
   }
 
@@ -67,32 +64,30 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   try {
     const response = await fetch(`http://localhost:5000/api/hotel/${hotelId}`);
-    
-    // Check if the response is ok
+
     if (!response.ok) {
       return {
-        notFound: true, // This will show the 404 page
+        notFound: true, 
       };
     }
 
     const hotel = await response.json();
 
-    // If no hotel data is returned
     if (!hotel || Object.keys(hotel).length === 0) {
       return {
-        notFound: true, // This will show the 404 page
+        notFound: true, 
       };
     }
 
     // Generate the correct slug from the hotel title
     const correctSlug = slugify(hotel.title);
 
-    // If the slug in the URL doesn't match the correct slug, redirect
+    // Check if the slug in the URL matches the correct slug
     if (slug !== correctSlug) {
       return {
         redirect: {
           destination: `/hotel-details/${correctSlug}/${hotelId}`,
-          permanent: true,
+          permanent: true, 
         },
       };
     }
@@ -105,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   } catch (error) {
     console.error('Error fetching hotel details:', error);
     return {
-      notFound: true, // This will show the 404 page
+      notFound: true, 
     };
   }
 };
