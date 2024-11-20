@@ -7,14 +7,12 @@ import { faChild, faBan, faBanSmoking, faDog } from '@fortawesome/free-solid-svg
 export default function Rules() {
   return (
     <section className="rules-container">
-      {/* Wrapper for House Rules Section */}
       <div className="rules-wrapper">
-        {/* Left Column for "House Rules" Heading */}
         <div className="rules-headings">
           <h3>House Rules</h3>
         </div>
 
-        {/* Right Column for "House Rules" Content */}
+
         <div className="rules-content">
           <div className="house-rules">
             <p>
@@ -65,9 +63,9 @@ export default function Rules() {
         </div>
       </div>
 
-      {/* Wrapper for Damage and Incidentals Section */}
+    
       <div className="rules-wrapper">
-        {/* Left Column for "Damage and Incidentals" Heading */}
+     
         <div className="rules-headings">
           <h3>
             <span>Damage and</span>
@@ -76,7 +74,7 @@ export default function Rules() {
           </h3>
         </div>
 
-        {/* Right Column for "Damage and Incidentals" Content */}
+        
         <div className="rules-content">
           <div className="damage-info">
             <p>
@@ -87,14 +85,14 @@ export default function Rules() {
         </div>
       </div>
 
-      {/* Wrapper for Cancellation Section */}
+  
       <div className="rules-wrapper">
-        {/* Left Column for "Cancellation" Heading */}
+    
         <div className="rules-headings">
           <h3>Cancellation</h3>
         </div>
 
-        {/* Right Column for "Cancellation" Content */}
+       
         <div className="rules-content cancellation-content">
           <div className="house-rules">
             <div className="timeline">
@@ -116,7 +114,7 @@ export default function Rules() {
                 </li>
               </ul>
             </div>
-            {/* Cancellation Policy Details */}
+           
             <div className="refund-container">
               <div className="refund-section">
                 <div className="refund-date">
@@ -144,7 +142,7 @@ export default function Rules() {
         </div>
       </div>
 
-      {/* Wrapper for Important Info Section */}
+    
       <div className="rules-wrapper">
         <div className="rules-headings">
           <h3>Important information</h3>
@@ -220,7 +218,7 @@ export default function Rules() {
                   <small>Read more</small>
                   <p><strong>Kyle G.</strong><br /> Sep 25, 2024</p>
                 </div>
-                {/* Repeat review cards */}
+               
               </div>
             </div>
             <button className="view-all">See all 24 reviews</button>

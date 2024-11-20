@@ -103,7 +103,7 @@ const Gallery: React.FC<GalleryProps> = ({ images: providedImages, title = "Hote
     <div className="relative">
       <div className="gallery-container">
         <div className="gallery-grid">
-          {/* Main Image */}
+         
           <div className="main-image image-container">
             <Image
               src={displayImages[0].url}
@@ -117,7 +117,7 @@ const Gallery: React.FC<GalleryProps> = ({ images: providedImages, title = "Hote
             <div className="dots-indicator"></div>
           </div>
 
-          {/* Thumbnail Column 1 */}
+       
           <div className="thumbnail-column">
             <div className="thumbnail image-container">
               <Image
@@ -139,7 +139,7 @@ const Gallery: React.FC<GalleryProps> = ({ images: providedImages, title = "Hote
             </div>
           </div>
 
-          {/* Thumbnail Column 2 */}
+      
           <div className="thumbnail-column">
             <div className="thumbnail image-container">
               <Image

@@ -19,14 +19,12 @@ export default function Header() {
   }, []);
 
   const toggleSave = () => {
-    // console.log('I am here..................');
     const newState = !isSaved;
     setIsSaved(newState);
     localStorage.setItem('propertyIsSaved', newState.toString());
   };
 
   const toggleShareModal = () => {
-    console.log('I am here..................');
     setIsShareModalOpen(!isShareModalOpen);
   };
 
@@ -62,7 +60,7 @@ export default function Header() {
           {/* Share Modal */}
           {isShareModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            {/* Modal Content */}
+            
             <div 
               className="bg-white rounded-xl max-w-md w-full p-6 space-y-6"
               onClick={e => e.stopPropagation()}
