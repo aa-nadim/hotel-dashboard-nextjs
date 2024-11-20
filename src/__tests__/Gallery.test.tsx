@@ -1,10 +1,10 @@
-// src/__tests__/Gallery.test.tsx
+
 // npx jest src/__tests__/Gallery.test.tsx
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Gallery from '../components/Gallery/Gallery';
 import '@testing-library/jest-dom';
 
-// Mock the Image component to avoid external requests during testing
+
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ src, alt }: { src: string, alt: string }) => (
@@ -20,7 +20,7 @@ describe('Gallery component', () => {
     expect(mainImage).toBeInTheDocument();
 
     const thumbnails = screen.getAllByRole('img');
-    expect(thumbnails.length).toBeGreaterThanOrEqual(4); // Default images should appear as thumbnails
+    expect(thumbnails.length).toBeGreaterThanOrEqual(4); 
   });
 
   it('renders the gallery with provided images', () => {
@@ -36,7 +36,7 @@ describe('Gallery component', () => {
     expect(mainImage).toBeInTheDocument();
 
     const thumbnails = screen.getAllByRole('img');
-    expect(thumbnails.length).toBeGreaterThanOrEqual(3); // Provided images should appear as thumbnails
+    expect(thumbnails.length).toBeGreaterThanOrEqual(3); 
   });
 
   it('opens and closes the modal', () => {
@@ -62,21 +62,18 @@ describe('Gallery component', () => {
     const modal = screen.getByRole('dialog');
     expect(modal).toBeInTheDocument();
 
-    // Test navigation with ArrowRight
     fireEvent.keyDown(document, { key: 'ArrowRight' });
     await waitFor(() => {
       const image = screen.getByAltText(/Hotel - View 2/i);
       expect(image).toBeInTheDocument();
     });
 
-    // Test navigation with ArrowLeft
     fireEvent.keyDown(document, { key: 'ArrowLeft' });
     await waitFor(() => {
       const image = screen.getByAltText(/Hotel - View 1/i);
       expect(image).toBeInTheDocument();
     });
 
-    // Test closing the modal with Escape key
     fireEvent.keyDown(document, { key: 'Escape' });
     expect(modal).not.toBeInTheDocument();
   });
@@ -111,6 +108,6 @@ describe('Gallery component', () => {
     render(<Gallery images={providedImages} />);
 
     const thumbnails = screen.getAllByRole('img');
-    expect(thumbnails.length).toBeGreaterThanOrEqual(5); // There should be at least 5 images
+    expect(thumbnails.length).toBeGreaterThanOrEqual(5); 
   });
 });

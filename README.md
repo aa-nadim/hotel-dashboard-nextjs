@@ -50,6 +50,8 @@ Show all Hotels' Card in ===>  `http://localhost:3000/`
 
 If you click on a card on the Landing Page (http://localhost:3000/), it will take you to http://localhost:3000/hotel-details/{slug}/{hotel-id} else it will take you (http://localhost:3000/404)
 
+Example ==> (http://localhost:3000/hotel-details/radisson-blu/1280e3ba-143a-43f7-84ae-c4c34d9e12fc)
+
 ### Image Gallery
 
 Displays dynamic images with an option to view each image in fullscreen mode.
