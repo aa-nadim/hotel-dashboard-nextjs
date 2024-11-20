@@ -1,4 +1,4 @@
-// src/__tests__/404.test.tsx
+
 // npx jest src/__tests__/404.test.tsx
 
 import { render, screen } from '@testing-library/react';
@@ -37,7 +37,6 @@ describe('Custom404 Page', () => {
 
   it('applies correct layout styling', () => {
     render(<Custom404 />);
-    // Target the outermost container
     const container = screen.getByTestId('404-container');
     expect(container).toHaveClass('min-h-screen flex items-center justify-center bg-gray-100');
   });

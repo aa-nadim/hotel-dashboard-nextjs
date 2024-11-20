@@ -1,4 +1,4 @@
-// src/__tests__/_app.test.tsx
+
 // npx jest src/__tests__/_app.test.tsx
 import { render } from '@testing-library/react';
 import { useRouter } from 'next/router';
