@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       },
     };
   } catch (error) {
-    console.error('Error fetching hotel details:', error);
+    //console.error('Error fetching hotel details:', error);
     return {
       notFound: true, 
     };
