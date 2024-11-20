@@ -99,8 +99,6 @@ const Gallery: React.FC<GalleryProps> = ({ images: providedImages, title = "Hote
   const displayImages = ensureMinimumImages(images);
 
 
-
-  console.log("displayImages",displayImages);
   return (
     <div className="relative">
       <div className="gallery-container">
