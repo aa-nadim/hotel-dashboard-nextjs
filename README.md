@@ -48,7 +48,7 @@ Show all Hotels' Card in ===>  `http://localhost:3000/`
 
 ### Specific Hotel Page
 
-If you click on a card on the Landing Page (http://localhost:3000/), it will take you to http://localhost:3000/hotel-details/{slug}/{hotel-id}
+If you click on a card on the Landing Page (http://localhost:3000/), it will take you to http://localhost:3000/hotel-details/{slug}/{hotel-id} else it will take you `http://localhost:3000/404`
 
 ### Image Gallery
 
