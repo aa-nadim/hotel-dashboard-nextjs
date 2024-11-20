@@ -84,7 +84,7 @@ const About: React.FC<AboutProps> = ({
       <div className="property-manager">
         <div>
           <Image
-            src="/images/logo.jpg" // Ensure this path corresponds to your public directory
+            src="/images/logo.jpg" 
             alt="Property Manager Logo"
             width={100}
             height={100}

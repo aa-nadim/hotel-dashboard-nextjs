@@ -69,16 +69,16 @@ export default function BookingCard() {
     setShowTravelersContent(false);
   };
 
-  // Get today's date in YYYY-MM-DD format for min date attribute
+
   const today = new Date().toISOString().split('T')[0];
 
   if (!isClient) {
-    return null; // Prevent rendering before client-side JavaScript runs
+    return null; 
   }
 
   return (
     <div className="mx-auto max-w-md rounded-lg border border-gray-200 p-6 shadow-lg">
-      {/* Member Banner */}
+  
       <div className="mb-6 flex items-center justify-between rounded-lg bg-blue-50 p-4">
         <div className="flex items-center gap-3">
           <div className="relative h-8 w-8">
@@ -93,25 +93,25 @@ export default function BookingCard() {
 
       {/* Booking Section */}
       <div className="space-y-6">
-        {/* Price */}
+       
         <div className="flex items-baseline">
           <h2 className="text-2xl font-bold">$134</h2>
           <span className="ml-2 text-gray-600">per night</span>
         </div>
 
-        {/* Cancellation Info */}
+     
         <div className="flex items-center gap-2 text-sm">
           <span className="text-gray-500">ⓘ</span>
           <p className="text-red-600">Non-refundable</p>
         </div>
 
-        {/* Availability Status */}
+      
         <div className="flex items-center gap-2 text-sm text-green-600">
           <span>✓</span>
           <span>Your dates are available</span>
         </div>
 
-        {/* Dates */}
+  
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Start date</label>
@@ -121,7 +121,7 @@ export default function BookingCard() {
               value={dates.startDate}
               onChange={(e) => handleDateChange('startDate', e.target.value)}
               className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-              data-testid="start-date-input" // Added for testing
+              data-testid="start-date-input" 
             />
           </div>
           <div>
@@ -147,7 +147,7 @@ export default function BookingCard() {
 
           {showTravelersContent && (
             <div className="absolute left-0 right-0 top-full z-10 mt-2 rounded-lg border border-gray-200 bg-white p-4 shadow-lg">
-              {/* Adults */}
+            
               <div className="mb-4 flex items-center justify-between">
                 <span className="font-medium">Adults</span>
                 <div className="flex items-center gap-3">
@@ -168,7 +168,7 @@ export default function BookingCard() {
                 </div>
               </div>
 
-              {/* Children */}
+             
               <div className="mb-4 flex items-center justify-between">
                 <div>
                   <span className="font-medium">Children</span>
@@ -192,7 +192,7 @@ export default function BookingCard() {
                 </div>
               </div>
 
-              {/* Pets Option */}
+             
               <div className="mb-4">
                 <label className="flex items-center gap-2">
                   <input
@@ -205,7 +205,6 @@ export default function BookingCard() {
                 </label>
               </div>
 
-              {/* Done Button */}
               <button
                 onClick={handleDone}
                 className="w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700"
